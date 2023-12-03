@@ -77,9 +77,8 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = Util.getSessionFactory().openSession()) {
 
             transaction = session.beginTransaction();
-            User user = (User) session.get(User.class, id);
-            session.delete(user);
 
+            session.delete(session.get(User.class, id));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -96,7 +95,6 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction = session.beginTransaction();
             List<User> users = session.createCriteria(User.class).list();
             transaction.commit();
-            users.stream().forEach(System.out::println);
             return users;
         } catch (Exception e) {
             if (transaction != null) {
