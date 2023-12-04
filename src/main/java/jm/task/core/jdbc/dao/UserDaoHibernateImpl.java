@@ -78,7 +78,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
             transaction = session.beginTransaction();
 
-            session.delete(session.get(User.class, id));
+            session.createQuery("delete User where id = id").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
